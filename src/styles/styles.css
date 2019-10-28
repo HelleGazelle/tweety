@@ -1,0 +1,10 @@
+.container {
+    display: flex;
+    justify-content: center;
+}
+
+.cleanUpButton {
+    display: flex;
+    justify-content: space-evenly;
+    margin: 10px;
+}
