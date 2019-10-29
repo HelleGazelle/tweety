@@ -1,22 +1,23 @@
 import tweets from '../resource/tweets.json';
 
 const getPreviewData = () => {
-    var data = [];
-    for(let i = 0; i < 10; i++) {
-        data.push(tweets[i]);
+    let previewData = [];
+    for(let i = 0; i < 20; i++) {
+        previewData.push(tweets[i]);
     }
-    return data;
+    return previewData;
 }
 
-const cleanUpData = () => {
-    const data = getPreviewData();
+const cleanUpSentences = () => {
+    // copy json to avoid two way binding
+    const data = JSON.parse(JSON.stringify(tweets));
 
     var urlPattern = /(?:www|https?)[^\s]+/;
     var tagPattern = /(@)[^\s]+/gi;
     var hastTagPattern = /(#)[^\s]+/gi;
     var specialCharacters = /[.?!,‘’'"–\-*&;:]/gi;
 
-    data.map(tweet => {
+    data.map((tweet: any) => {
         var tweetText = tweet.text;
         tweetText = tweetText.replace(urlPattern, '');
         tweetText = tweetText.replace(tagPattern, '');
@@ -28,49 +29,63 @@ const cleanUpData = () => {
     return data;
 }
 
+const cleanUpWords = (dirtyWords: string[]) => {
+    const filter = ['', '\n', 'I', 'you', 'to', 'and', 'is', 'the', 'a', 'of', 'on', 'it', 'in', 'for', 'all', 'will', 'not', 'they', 'be', ];
+    
+    for(let i = 0; i < dirtyWords.length; i++) {
+        filter.forEach(filterItem => {
+            if(dirtyWords[i] === filterItem) {
+                delete dirtyWords[i];
+            }
+        })
+    }
+    return dirtyWords;
+}
+
 const getRanking = () => {
     const wordsCount = getWordsWithCounter();
     var topTen: any = {};
     for(let key in wordsCount) {
         if(Object.values(topTen).length < 10){
-            topTen[key] = wordsCount[key];
+            topTen[key.replace(/_/, '')] = wordsCount[key];
         } else {
             for(let max in topTen) {
                 if(wordsCount[key] > topTen[max]) {
                     delete topTen[max];
-                    topTen[key] = wordsCount[key];
+                    topTen[key.replace(/_/, '')] = wordsCount[key];
                 }
             }
         }
     }
     
     // sort by ranking
-    let sortedTopTen = Object.entries(topTen).sort(compare);
-    // bring data back to array structure
-    let topTenResult: (name: string, counter: number)[] = [];
-    sortedTopTen.forEach(item => {
-        topTenResult[item[0]] = item[1];
-    });
-    return topTenResult;
+    let sortedTopTen: [string, any][] = Object.entries(topTen).sort(compare);
+    
+    return sortedTopTen;
 }
 
 const getWordsWithCounter = () => {
-    const cleanTweets = cleanUpData();
-    const words: string[] = [];
-    const ranking: any = {};
+    const cleanTweets = cleanUpSentences();
+    const dirtyWords: string[] = [];
+    let ranking: any = {};
 
     // get all the words
-    cleanTweets.forEach(tweet => {
+    cleanTweets.forEach((tweet: any) => {
         var tweetWords = tweet.text.split(' ');
-        tweetWords.forEach(tweetWord => {
-            words.push(tweetWord);
+        tweetWords.forEach((tweetWord: any) => {
+            dirtyWords.push(tweetWord);
         })
     });
 
+    const cleanWords = cleanUpWords(dirtyWords);
+
     // set a value and the related counter
-    for(var i = 0; i < words.length; i++) {
-        ranking["_" + words[i]] = (ranking["_" + words[i]] || 0) + 1;
+    for(let i = 0; i < cleanWords.length; i++) {
+        ranking["_" + cleanWords[i]] = (ranking["_" + cleanWords[i]] || 0) + 1;
     }
+    // unset undefined
+    delete ranking['_undefined'];
+
     return ranking
 }
 
@@ -83,6 +98,5 @@ const compare = (a: any, b: any) => {
 
 export default {
     getPreviewData,
-    cleanUpData,
     getRanking,
 }

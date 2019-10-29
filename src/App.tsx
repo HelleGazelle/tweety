@@ -7,7 +7,7 @@ const App: React.FC = () => {
   return (
     <div className="App">
       <header>
-        <Typography variant="h1" className='Tweety'>Tweety</Typography>
+        <Typography variant="h2" className='Tweety'>Tweety</Typography>
       </header>
       <div className='tweetGrid'>
         <TweetGrid/>
