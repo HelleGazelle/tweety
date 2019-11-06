@@ -7,12 +7,18 @@ import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
 import TableBody from '@material-ui/core/TableBody';
 
-import service from './Data';
+import rankingService from './Data';
+import tweetService from '../controller/TweetController';
 
 export default function TweetGrid () {
     
-    const [tweets] = useState(service.getPreviewData());
-    const [ranking] = useState(service.getRanking());
+    const [previewTweets, setPreviewTweets] = useState([{id: 0, text: null}]);
+    tweetService.loadTweetsFromAccount('trump')
+        .then((result: []) => {
+            setPreviewTweets(result);
+    })
+
+    const [ranking] = useState(rankingService.getRanking());
 
     return (
         <React.Fragment>
@@ -25,7 +31,7 @@ export default function TweetGrid () {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {tweets.map(tweet => (
+                            {previewTweets.map(tweet => (
                                 <TableRow key={tweet.id}>
                                     <TableCell>{tweet.text}</TableCell>
                                 </TableRow>
@@ -59,4 +65,3 @@ export default function TweetGrid () {
         </React.Fragment>
       );
 }
-

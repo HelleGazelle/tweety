@@ -1,12 +1,5 @@
 import tweets from '../resource/tweets.json';
-
-const getPreviewData = () => {
-    let previewData = [];
-    for(let i = 0; i < 20; i++) {
-        previewData.push(tweets[i]);
-    }
-    return previewData;
-}
+import service from '../controller/TweetController';
 
 const cleanUpSentences = () => {
     // copy json to avoid two way binding
@@ -97,6 +90,5 @@ const compare = (a: any, b: any) => {
 }
 
 export default {
-    getPreviewData,
     getRanking,
 }
