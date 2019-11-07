@@ -1,16 +1,18 @@
-import tweets from '../resource/tweets.json';
+// import tweets from '../resource/tweets.json';
 import service from '../controller/TweetController';
 
-const cleanUpSentences = () => {
-    // copy json to avoid two way binding
-    const data = JSON.parse(JSON.stringify(tweets));
+// return all the tweets fetched from the API
+const getAllTweets = (accountName: string) => {
+    return service.loadTweetsFromAccount(accountName);
+}
 
+const cleanUpSentences = (tweets: []) => {
     var urlPattern = /(?:www|https?)[^\s]+/;
     var tagPattern = /(@)[^\s]+/gi;
     var hastTagPattern = /(#)[^\s]+/gi;
     var specialCharacters = /[.?!,‘’'"–\-*&;:]/gi;
 
-    data.map((tweet: any) => {
+    tweets.map((tweet: any) => {
         var tweetText = tweet.text;
         tweetText = tweetText.replace(urlPattern, '');
         tweetText = tweetText.replace(tagPattern, '');
@@ -19,7 +21,7 @@ const cleanUpSentences = () => {
         tweet.text = tweetText;
         return tweet;
     })
-    return data;
+    return tweets;
 }
 
 const cleanUpWords = (dirtyWords: string[]) => {
@@ -35,30 +37,35 @@ const cleanUpWords = (dirtyWords: string[]) => {
     return dirtyWords;
 }
 
-const getRanking = () => {
-    const wordsCount = getWordsWithCounter();
-    var topTen: any = {};
-    for(let key in wordsCount) {
-        if(Object.values(topTen).length < 10){
-            topTen[key.replace(/_/, '')] = wordsCount[key];
-        } else {
-            for(let max in topTen) {
-                if(wordsCount[key] > topTen[max]) {
-                    delete topTen[max];
+const getRanking = (accountName: string) => {
+    return service.loadTweetsFromAccount(accountName)
+        .then((result) => {
+            // copy json to avoid two way binding
+            const data = JSON.parse(JSON.stringify(result));
+
+            const wordsCount = getWordsWithCounter(data);
+            var topTen: any = {};
+            for(let key in wordsCount) {
+                if(Object.values(topTen).length < 10){
                     topTen[key.replace(/_/, '')] = wordsCount[key];
+                } else {
+                    for(let max in topTen) {
+                        if(wordsCount[key] > topTen[max]) {
+                            delete topTen[max];
+                            topTen[key.replace(/_/, '')] = wordsCount[key];
+                        }
+                    }
                 }
             }
-        }
-    }
-    
-    // sort by ranking
-    let sortedTopTen: [string, any][] = Object.entries(topTen).sort(compare);
-    
-    return sortedTopTen;
+            
+            // sort by ranking
+            let sortedTopTen: [string, any][] = Object.entries(topTen).sort(compare);
+            return sortedTopTen;
+    })
 }
 
-const getWordsWithCounter = () => {
-    const cleanTweets = cleanUpSentences();
+const getWordsWithCounter = (tweets: []) => {
+    const cleanTweets = cleanUpSentences(tweets);
     const dirtyWords: string[] = [];
     let ranking: any = {};
 
@@ -91,4 +98,5 @@ const compare = (a: any, b: any) => {
 
 export default {
     getRanking,
+    getAllTweets
 }
