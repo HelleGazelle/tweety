@@ -10,19 +10,27 @@ import TableBody from '@material-ui/core/TableBody';
 import service from './Data';
 
 export default function TweetGrid () {
+    // auto generating randomized keys for the table elements
+    const uuidv1 = require('uuid/v1');
+    uuidv1();
     
     const [previewTweets, setPreviewTweets] = useState([{id: 0, text: null}]);
     const [ranking, setRanking] = useState([[1, null], [null]]);
 
-    service.getAllTweets('trump')
+    setTimeout(() => {
+        service.getAllTweets('trump')
         .then((result: []) => {
             setPreviewTweets(result);
-    })
-    service.getRanking('trump')
+        })
+    }, 10000);
+    
+    setTimeout(() => {
+        service.getRanking('trump')
         .then((result: [string, any][]) => {
             setRanking(result);
-    })
-
+        })
+    }, 10000);
+    
     return (
         <React.Fragment>
             <div className="container" >
@@ -35,7 +43,7 @@ export default function TweetGrid () {
                         </TableHead>
                         <TableBody>
                             {previewTweets.map(tweet => (
-                                <TableRow key={tweet.id}>
+                                <TableRow key={uuidv1()}>
                                     <TableCell>{tweet.text}</TableCell>
                                 </TableRow>
                                 )  
@@ -54,7 +62,7 @@ export default function TweetGrid () {
                         </TableHead>
                         <TableBody>
                             {Object.entries(ranking).map(([rank, [word, count]]) => (
-                                <TableRow key={rank}>
+                                <TableRow key={uuidv1()}>
                                     <TableCell>{parseInt(rank)+1}</TableCell>
                                     <TableCell>{word}</TableCell>
                                     <TableCell>{count}</TableCell>

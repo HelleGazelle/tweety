@@ -1,7 +1,7 @@
 const axios = require('axios');
-
+const URL = 'http://localhost:3001/';
 const loadTweetsFromAccount = (twitterAcc: string) => {
-    const url = `http://localhost:3001/${twitterAcc}`;
+    const url = `${URL}${twitterAcc}`;
     
     return new Promise<[]>((resolve, reject) => {
         axios.get(url)
