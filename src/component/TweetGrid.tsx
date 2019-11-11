@@ -13,19 +13,20 @@ export default function TweetGrid () {
     // auto generating randomized keys for the table elements
     const uuidv1 = require('uuid/v1');
     uuidv1();
+    const twitterAccount = 'elonMusk';
     
     const [previewTweets, setPreviewTweets] = useState([{id: 0, text: null}]);
     const [ranking, setRanking] = useState([[1, null], [null]]);
 
     setTimeout(() => {
-        service.getAllTweets('trump')
+        service.getAllTweets(twitterAccount)
         .then((result: []) => {
-            setPreviewTweets(result);
+            setPreviewTweets(result.slice(0, 50));
         })
     }, 10000);
     
     setTimeout(() => {
-        service.getRanking('trump')
+        service.getRanking(twitterAccount)
         .then((result: [string, any][]) => {
             setRanking(result);
         })

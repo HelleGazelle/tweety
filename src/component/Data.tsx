@@ -1,4 +1,3 @@
-// import tweets from '../resource/tweets.json';
 import service from '../controller/TweetController';
 
 // return all the tweets fetched from the API
@@ -25,7 +24,7 @@ const cleanUpSentences = (tweets: []) => {
 }
 
 const cleanUpWords = (dirtyWords: string[]) => {
-    const filter = ['', '\n', 'I', 'you', 'to', 'and', 'is', 'the', 'a', 'of', 'on', 'it', 'in', 'for', 'all', 'will', 'not', 'they', 'be', ];
+    const filter = ['', '\n', 'I', 'you', 'to', 'and', 'is', 'the', 'a', 'of', 'on', 'it', 'in', 'for', 'all', 'will', 'not', 'they', 'be', 'b', 'bRT', 'at', 'than', 'by', 'that', 'amp', 'S', 'now', 'our', 'next', 'cars', 'about', 'up', 'no', 'yes', 'X', 'bTesla', 'Will', 'one', 'want', 'what', 'should', 'their', 'then'];
     
     for(let i = 0; i < dirtyWords.length; i++) {
         filter.forEach(filterItem => {
