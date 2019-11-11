@@ -1,4 +1,4 @@
-import React , {useState} from 'react';
+import React , {useState, useEffect} from 'react';
 import '../styles/styles.css';
 import Paper from '@material-ui/core/Paper';
 import Table from '@material-ui/core/Table';
@@ -18,19 +18,16 @@ export default function TweetGrid () {
     const [previewTweets, setPreviewTweets] = useState([{id: 0, text: null}]);
     const [ranking, setRanking] = useState([[1, null], [null]]);
 
-    setTimeout(() => {
+    useEffect(() => {
         service.getAllTweets(twitterAccount)
         .then((result: []) => {
             setPreviewTweets(result.slice(0, 50));
-        })
-    }, 10000);
-    
-    setTimeout(() => {
+        });
         service.getRanking(twitterAccount)
         .then((result: [string, any][]) => {
             setRanking(result);
-        })
-    }, 10000);
+        });
+    }, [])
     
     return (
         <React.Fragment>
