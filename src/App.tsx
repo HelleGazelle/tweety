@@ -2,6 +2,7 @@ import React from 'react';
 import './App.css';
 import Typography from '@material-ui/core/Typography';
 import TweetGrid from './component/TweetGrid';
+import Chart from './component/Chart';
 
 const App: React.FC = () => {
   return (
@@ -12,6 +13,7 @@ const App: React.FC = () => {
       <div className='tweetGrid'>
         <TweetGrid/>
       </div>
+      <Chart />
     </div>
   );
 }
