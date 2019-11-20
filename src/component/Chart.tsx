@@ -25,7 +25,7 @@ class Chart extends React.Component {
     }
 
     readonly data = {
-        labels: ['Word1', 'Word2', 'Word3', 'Word4', 'Word5'],
+        labels: ['Word1', 'Word2', 'Word3', 'Word4', 'Word5', 'Word6', 'Word7', 'Word8', 'Word9', 'Word10'],
         datasets: [
           {
             label: '# in text',
@@ -34,7 +34,7 @@ class Chart extends React.Component {
             borderWidth: 1,
             hoverBackgroundColor: 'rgba(255,99,132,0.4)',
             hoverBorderColor: 'rgba(255,99,132,1)',
-            data: [257, 199, 94, 52, 52]
+            data: [257, 199, 144, 100, 52, 40, 32, 27, 23, 10]
           }
         ]
       };
