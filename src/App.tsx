@@ -3,6 +3,7 @@ import './App.css';
 import Typography from '@material-ui/core/Typography';
 import TweetGrid from './component/TweetGrid';
 import Chart from './component/Chart';
+import Login from './component/Login';
 
 const App: React.FC = () => {
   return (
@@ -14,7 +15,11 @@ const App: React.FC = () => {
         <TweetGrid/>
       </div>
       <Chart />
+      <div>
+        <Login/>
+      </div>
     </div>
+    
   );
 }
 
