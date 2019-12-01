@@ -4,6 +4,7 @@ import Typography from '@material-ui/core/Typography';
 import TweetGrid from './component/TweetGrid';
 import Chart from './component/Chart';
 import Login from './component/Login';
+import SignUp from './component/SignUp';
 
 const App: React.FC = () => {
   return (
@@ -17,6 +18,9 @@ const App: React.FC = () => {
       <Chart />
       <div>
         <Login/>
+      </div>
+      <div>
+        <SignUp/>
       </div>
     </div>
     
