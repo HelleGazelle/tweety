@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState, ChangeEvent } from 'react';
+import update from 'immutability-helper';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -7,9 +8,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
-//import Box from '@material-ui/core/Box';
-// verstehe nicht ganz wieso das nicht funktuniert 
-//import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import Icon from '@material-ui/core/Icon';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
@@ -35,33 +34,55 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
+interface FormData {
+  username: String,
+  password: String
+}
+
 export default function SignIn() {
   const classes = useStyles();
+
+  const [formData, setFormData] = useState({
+    username: '',
+    password: ''
+  })
+
+  const handleSubmit = (event: any) => {
+    console.log(formData);
+    event.preventDefault();
+  }
+
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    let name = event.currentTarget.id as keyof FormData;
+    let value: String = event.currentTarget.value;
+
+    setFormData((prevState) => update(prevState, {
+      [name]: {$set: value}
+    }))
+  }
 
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
-            {/* 
-                Icon wird noch nicht geladen
-                <LockOutlinedIcon />
-            */}
+          <Icon>lock</Icon>
         </Avatar>
         <Typography component="h1" variant="h5">
           Sign in
         </Typography>
-        <form className={classes.form} noValidate>
+        <form className={classes.form} noValidate onSubmit={handleSubmit}>
           <TextField
             variant="outlined"
             margin="normal"
             required
             fullWidth
-            id="email"
+            id="username"
             label="Email Address"
             name="email"
             autoComplete="email"
             autoFocus
+            onChange={handleChange}
           />
           <TextField
             variant="outlined"
@@ -73,6 +94,7 @@ export default function SignIn() {
             type="password"
             id="password"
             autoComplete="current-password"
+            onChange={handleChange}
           />
           <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
@@ -96,7 +118,7 @@ export default function SignIn() {
             </Grid>
             */}
             <Grid item>
-              <Link href="#" variant="body2">
+              <Link href="/signUp" variant="body2">
                 {"Don't have an account? Sign Up"}
               </Link>
             </Grid>
