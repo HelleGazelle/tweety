@@ -1,29 +1,27 @@
 const express = require('express');
+const bodyParser = require('body-parser');
 const cors = require('cors');
-const config = require('./config.js');
-const Twitter = require('twitter');
+const mongoose = require('mongoose')
+const userRouter = require('./routes/user');
+const tweetRouter = require('./routes/tweets');
+
+mongoose.connect('mongodb://127.0.0.1:27017/users', {
+    useNewUrlParser: true,
+    useCreateIndex: true,
+    useFindAndModify: true,
+    useUnifiedTopology: true
+});
 
 // define middleware
 const app = express();
+app.use(bodyParser.json());
 
 //enable cors
 app.use(cors());
 
-const client = new Twitter(config);
-const userTimelineUrl = 'statuses/user_timeline.json?screen_name=';
+app.use(userRouter);
+app.use(tweetRouter);
 
-const tweetsFromAccount = (accountName) => client.get(userTimelineUrl + accountName + '&count=200', {});
-
-// return tweets as json for the given screen name
-app.use('/tweets/:accountName', async (req, res) => {
-    try {
-        const data = await tweetsFromAccount(req.params.accountName);
-        res.json(data);
-    } catch(e) {
-        res.send('Tweets could not be loaded: ' + e);
-    }
-        
-})
 
 // avoid getting favicon.ico
 app.use( function(req, res, next) {
