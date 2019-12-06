@@ -8,6 +8,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
 import TableBody from '@material-ui/core/TableBody';
+import Chart from './Chart';
 
 import service from './Data';
 import { isArray } from 'util';
@@ -94,6 +95,7 @@ export default function TweetGrid () {
                     </Table>
                 </Paper>
             </div>
+            <Chart ranking = {ranking} />
         </React.Fragment>
       );
 }

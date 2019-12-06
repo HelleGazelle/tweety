@@ -1,54 +1,70 @@
 import React, { Component } from 'react';
-import { Bar, Line, Pie } from 'react-chartjs-2';
+import { Bar } from 'react-chartjs-2';
+import data from './Data';
+
+interface ChartProps {
+    ranking: (number | null)[][];
+}
+
+interface ChartState {
+
+}
 
 
-class Chart extends React.Component {
-    constructor(props: any) {
+class Chart extends Component<ChartProps, ChartState> {
+    constructor(props: ChartProps) {
         super(props);
         this.state = {
-            chartData: {
-                labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
 
-                datasets: [
-                    {
-                        label: 'My First dataset',
-                        backgroundColor: 'rgba(255,99,132,0.2)',
-                        borderColor: 'rgba(255,99,132,1)',
-                        borderWidth: 1,
-                        hoverBackgroundColor: 'rgba(255,99,132,0.4)',
-                        hoverBorderColor: 'rgba(255,99,132,1)',
-                        data: [65, 59, 80, 81, 56, 55, 40]
-                    }
-                ]
-            }
         }
     }
 
-    readonly data = {
-        labels: ['Word1', 'Word2', 'Word3', 'Word4', 'Word5', 'Word6', 'Word7', 'Word8', 'Word9', 'Word10'],
-        datasets: [
-          {
-            label: '# in text',
-            backgroundColor: 'rgba(255,99,132,0.2)',
-            borderColor: 'rgba(255,99,132,1)',
-            borderWidth: 1,
-            hoverBackgroundColor: 'rgba(255,99,132,0.4)',
-            hoverBorderColor: 'rgba(255,99,132,1)',
-            data: [257, 199, 144, 100, 52, 40, 32, 27, 23, 10]
-          }
-        ]
-      };
 
     render() {
+
+
+
+        const data = {
+            labels: ['Word1', 'Word2', 'Word3', 'Word4', 'Word5', 'Word6', 'Word7', 'Word8', 'Word9', 'Word10'],
+            datasets: [
+                {
+                    label: 'My First dataset',
+                    backgroundColor: 'rgba(255,99,132,0.2)',
+                    borderColor: 'rgba(255,99,132,1)',
+                    borderWidth: 1,
+                    hoverBackgroundColor: 'rgba(255,99,132,0.4)',
+                    hoverBorderColor: 'rgba(255,99,132,1)',
+                    data: [this.props.ranking[0][1], this.props.ranking[0][1], this.props.ranking[0][1], this.props.ranking[0][1], this.props.ranking[0][1], this.props.ranking[0][1], this.props.ranking[0][1], this.props.ranking[0][1], this.props.ranking[0][1], this.props.ranking[0][1]]
+                }
+            ]
+        };
+
+
+        for (let i = 0; i < this.props.ranking.length; i++) {
+            data.datasets[0].data[i] = this.props.ranking[i][1];
+            //  if (this.props.ranking[i][0] != null) {
+            //     data.labels[i] = this.props.ranking[i][0].toString();
+            //  }
+        }
+
+
+
         return (
             <div className="chart">
                 <h2>Bar Chart</h2>
                 <Bar
-                    data={this.data}
+                    data={data}
                     width={100}
                     height={50}
                     options={{
-                        maintainAspectRatio: false
+                        maintainAspectRatio: false,
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                    beginAtZero: true
+                                }
+                            }]
+                        }
                     }}
                 />
             </div>
