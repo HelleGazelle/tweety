@@ -42,9 +42,9 @@ class Chart extends Component<ChartProps, ChartState> {
 
         for (let i = 0; i < this.props.ranking.length; i++) {
             data.datasets[0].data[i] = this.props.ranking[i][1];
-            //  if (this.props.ranking[i][0] != null) {
-            //     data.labels[i] = this.props.ranking[i][0].toString();
-            //  }
+              if (this.props.ranking[i][0] != null) {
+                 data.labels[i] = this.props.ranking[i][0]!.toString();
+             }
         }
 
 
