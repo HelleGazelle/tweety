@@ -9,6 +9,7 @@ const requestLogin = (email: string, password: string) => {
         })
         .then((response: any) => {
             if (response && response.status === 201) {
+                resolve(response.data);
             }
             else {
                 reject('Could not SignIn User.');
