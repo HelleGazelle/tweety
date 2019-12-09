@@ -1,16 +1,19 @@
 const express = require('express')
 const User = require('../models/User')
-const auth = require('./auth')
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcryptjs')
+
+const saltRounds = 10;
 
 const router = express.Router()
 
-router.post('/users', async (req, res) => {
+router.post('/users/register', async (req, res) => {
     // Create a new user
     try {
-        const user = new User(req.body)
-        await user.save()
-        const token = await user.generateAuthToken()
-        res.status(201).send({ user, token })
+        const user = new User(req.body);
+        user.password = bcrypt.hashSync(user.password, saltRounds);
+        await user.save();
+        res.status(201).send({ email: user.email })
     } catch (error) {
         res.status(400).send(error)
     }
@@ -19,22 +22,32 @@ router.post('/users', async (req, res) => {
 router.post('/users/login', async(req, res) => {
     //Login a registered user
     try {
-        const { email, password } = req.body
-        const user = await User.findByCredentials(email, password)
+        const { email, password } = req.body;
+        // Search for a user by email and password.
+        const user = await User.findOne({ email} )
+        if (!user) {
+            throw new Error({ error: 'Invalid login credentials' })
+        }
+        const isPasswordMatch = await bcrypt.compare(password, user.password)
+        if (!isPasswordMatch) {
+            throw new Error({ error: 'Invalid login credentials' })
+        }
+
         if (!user) {
             return res.status(401).send({error: 'Login failed! Check authentication credentials'})
-        }
-        const token = await user.generateAuthToken()
-        res.send({ user, token })
+        };
+        const token = generateAuthToken(user);
+        console.log('sucessfull logged in: ' + user.email);
+        res.send({ token });
     } catch (error) {
-        res.status(400).send(error)
+        res.status(400).send(error);
     }
 
 })
 
-router.get('/users/me', auth, async(req, res) => {
-    // View logged in user profile
-    res.send(req.user)
-})
+const generateAuthToken = (user) => {
+    // Generate an auth token for the user
+    return jwt.sign({_id: user._id}, process.env.JWT_KEY);
+}
 
 module.exports = router
