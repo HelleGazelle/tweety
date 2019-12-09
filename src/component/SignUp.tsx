@@ -12,6 +12,7 @@ import Icon from '@material-ui/core/Icon';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import Service from '../controller/RegisterController';
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -32,6 +33,7 @@ const useStyles = makeStyles(theme => ({
     margin: theme.spacing(3, 0, 2),
   },
 }));
+
 interface FormData {
   firstName: String,
   lastName: String,
@@ -51,6 +53,7 @@ export default function SignUp() {
 
   const handleSubmit = (event: any) => {
     console.log(formData);
+    Service.sendRegisterData(formData.email, formData.password);
     event.preventDefault();
   }
 
