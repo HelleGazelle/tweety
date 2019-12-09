@@ -12,6 +12,7 @@ import Icon from '@material-ui/core/Icon';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import Service from '../controller/LoginController';
 
 
 const useStyles = makeStyles(theme => ({
@@ -49,6 +50,7 @@ export default function SignIn() {
 
   const handleSubmit = (event: any) => {
     console.log(formData);
+    Service.requestLogin(formData.username, formData.password);
     event.preventDefault();
   }
 
