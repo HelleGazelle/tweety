@@ -40,18 +40,17 @@ interface FormData {
   password: String
 }
 
-export default function SignIn() {
+export default function SignIn(props: any) {
   const classes = useStyles();
 
   const [formData, setFormData] = useState({
     username: '',
     password: ''
-  })
+  });
 
-  const handleSubmit = (event: any) => {
-    console.log(formData);
-    Service.requestLogin(formData.username, formData.password);
-    event.preventDefault();
+  const handleSubmit = async () => {
+    const token = await Service.requestLogin(formData.username, formData.password);
+    console.log(props.setToken(token));
   }
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -60,7 +59,7 @@ export default function SignIn() {
 
     setFormData((prevState) => update(prevState, {
       [name]: {$set: value}
-    }))
+    }));
   }
 
   return (
@@ -103,7 +102,7 @@ export default function SignIn() {
             label="Remember me"
           />
           <Button
-            type="submit"
+            onClick={handleSubmit}
             fullWidth
             variant="contained"
             color="primary"
@@ -112,13 +111,6 @@ export default function SignIn() {
             Sign In
           </Button>
           <Grid container>
-              {/*
-            <Grid item xs>
-              <Link href="#" variant="body2">
-                Forgot password?
-              </Link>
-            </Grid>
-            */}
             <Grid item>
               <Link href="/signUp" variant="body2">
                 {"Don't have an account? Sign Up"}

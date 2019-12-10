@@ -52,7 +52,6 @@ export default function SignUp() {
   })
 
   const handleSubmit = (event: any) => {
-    console.log(formData);
     Service.sendRegisterData(formData.email, formData.password);
     event.preventDefault();
   }
