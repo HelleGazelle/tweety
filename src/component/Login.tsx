@@ -13,7 +13,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Service from '../controller/LoginController';
-
+import {useHistory} from 'react-router-dom';
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -40,18 +40,21 @@ interface FormData {
   password: String
 }
 
-export default function SignIn() {
+export default function SignIn(props: any) {
   const classes = useStyles();
 
   const [formData, setFormData] = useState({
     username: '',
     password: ''
-  })
+  });
 
-  const handleSubmit = (event: any) => {
-    console.log(formData);
-    Service.requestLogin(formData.username, formData.password);
-    event.preventDefault();
+  let history = useHistory();
+
+  const handleSubmit = () => {
+    Service.requestLogin(formData.username, formData.password).then((token) => {
+      props.setToken(token);
+      history.push('/');
+    })
   }
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -60,7 +63,7 @@ export default function SignIn() {
 
     setFormData((prevState) => update(prevState, {
       [name]: {$set: value}
-    }))
+    }));
   }
 
   return (
@@ -103,7 +106,7 @@ export default function SignIn() {
             label="Remember me"
           />
           <Button
-            type="submit"
+            onClick={handleSubmit}
             fullWidth
             variant="contained"
             color="primary"
@@ -112,13 +115,6 @@ export default function SignIn() {
             Sign In
           </Button>
           <Grid container>
-              {/*
-            <Grid item xs>
-              <Link href="#" variant="body2">
-                Forgot password?
-              </Link>
-            </Grid>
-            */}
             <Grid item>
               <Link href="/signUp" variant="body2">
                 {"Don't have an account? Sign Up"}
