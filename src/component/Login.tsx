@@ -13,7 +13,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Service from '../controller/LoginController';
-
+import {useHistory} from 'react-router-dom';
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -48,9 +48,13 @@ export default function SignIn(props: any) {
     password: ''
   });
 
-  const handleSubmit = async () => {
-    const token = await Service.requestLogin(formData.username, formData.password);
-    console.log(props.setToken(token));
+  let history = useHistory();
+
+  const handleSubmit = () => {
+    Service.requestLogin(formData.username, formData.password).then((token) => {
+      props.setToken(token);
+      history.push('/');
+    })
   }
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {

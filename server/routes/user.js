@@ -28,19 +28,18 @@ router.post('/users/login', async(req, res) => {
         if (!user) {
             throw new Error({ error: 'Invalid login credentials' })
         }
-        const isPasswordMatch = await bcrypt.compare(password, user.password)
-        if (!isPasswordMatch) {
-            throw new Error({ error: 'Invalid login credentials' })
+        if (!await bcrypt.compare(password, user.password)) {
+            throw new Error({ error: 'Invalid login credentials' });
         }
 
         if (!user) {
             return res.status(401).send({error: 'Login failed! Check authentication credentials'})
         };
         const token = generateAuthToken(user);
-        console.log('sucessfull logged in: ' + user.email);
-        res.send({ token });
+        console.log('sucessfully logged in: ' + user.email);
+        res.send(token);
     } catch (error) {
-        res.status(400).send(error);
+        res.status(401).send(error);
     }
 
 })
