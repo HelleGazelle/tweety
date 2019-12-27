@@ -1,14 +1,15 @@
 const axios = require('axios');
 const URL = 'http://localhost:3001/users/login';
+
 const requestLogin = (email: string, password: string) => {
-    
     return new Promise<[]>((resolve, reject) => {
         axios.post(URL, {
             email: email,
             password: password
         })
         .then((response: any) => {
-            if (response && response.status === 201) {
+            
+            if (response && response.status === 200) {
                 resolve(response.data);
             }
             else {

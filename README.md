@@ -6,6 +6,11 @@ For starting the project in development mode:
 2. MongoDb and Mongo Shell to spin up a local db
 3. Docker
 
+## Define your local environment data
+
+1. Create a config.js file in the server directory and fill it with the twitter api credentials
+1. Insert the JWT secret as JWT_KEY in a .env file in the server directory
+
 ## Steps to setup local dev-env
 
 1. Execute `npm install` in the main directory to install the React frontend dependencies
