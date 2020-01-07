@@ -9,7 +9,6 @@ const App: React.FC = () => {
   const [token, setToken] = useState('');
 
   const mainPage = () => {
-    console.log(token);
     if(token === '') {
       return <Redirect to='/login' />
     }
