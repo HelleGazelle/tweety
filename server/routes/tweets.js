@@ -10,7 +10,6 @@ const userTimelineUrl = 'statuses/user_timeline.json?screen_name=';
 
 const tweetsFromAccount = (accountName) => client.get(userTimelineUrl + accountName + '&count=200', {});
 
-
 // return tweets as json for the given screen name
 router.get('/tweets/:accountName', jwt({secret: process.env.JWT_KEY}), async (req, res) => {
     try {
