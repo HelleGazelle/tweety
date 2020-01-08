@@ -2,13 +2,13 @@ import service from '../controller/TweetController';
 import { isArray } from 'util';
 
 // return all the tweets fetched from the API
-const getAllTweets = (accountName: string) => {
-    service.loadTweetsFromAccount(accountName).then((res) => {
+const getAllTweets = (accountName: string, jwt: string) => {
+    service.loadTweetsFromAccount(accountName, jwt).then((res) => {
         if (!isArray(res)) {
             return null;
         }
     });
-    return service.loadTweetsFromAccount(accountName);
+    return service.loadTweetsFromAccount(accountName, jwt);
 }
 
 const cleanUpSentences = (tweets: []) => {
@@ -30,7 +30,7 @@ const cleanUpSentences = (tweets: []) => {
 }
 
 const cleanUpWords = (dirtyWords: string[]) => {
-    const filter = ['RT','UP','THIS','YEAR', 'The', 'so', 'with','your', 'but', 'true', 'high', 'ahead', 'used', '', '\n', 'I', 'you', 'to', 'and', 'is', 'the', 'a', 'of', 'on', 'it', 'in', 'for', 'all', 'will', 'not', 'they', 'be', 'b', 'bRT', 'at', 'than', 'by', 'that', 'amp', 'S', 'now', 'our', 'next', 'cars', 'about', 'up', 'no', 'yes', 'X', 'bTesla', 'Will', 'one', 'want', 'what', 'should', 'their', 'then'];
+    const filter = ['Ok', 'an', 'from', 'much', 'more', 'time', 'Yes', 'would', 'this', 'no', 'its', 'or', 'was', 'has', 'No', '...', 'Its', 'been', 'RT','UP','THIS','YEAR', 'The', 'so', 'with','your', 'but', 'true', 'high', 'ahead', 'used', '', '\n', 'I', 'you', 'to', 'and', 'is', 'the', 'a', 'of', 'on', 'it', 'in', 'for', 'all', 'will', 'not', 'they', 'be', 'b', 'bRT', 'at', 'than', 'by', 'that', 'amp', 'S', 'now', 'our', 'next', 'cars', 'about', 'up', 'no', 'yes', 'X', 'bTesla', 'Will', 'one', 'want', 'what', 'should', 'their', 'then'];
     
     for(let i = 0; i < dirtyWords.length; i++) {
         filter.forEach(filterItem => {
@@ -42,8 +42,8 @@ const cleanUpWords = (dirtyWords: string[]) => {
     return dirtyWords;
 }
 
-const getRanking = (accountName: string) => {
-    return service.loadTweetsFromAccount(accountName)
+const getRanking = (accountName: string, jwt: string) => {
+    return service.loadTweetsFromAccount(accountName, jwt)
         .then((result) => {
             if (!isArray(result)) {
                 return null;
