@@ -13,7 +13,7 @@ import Chart from './Chart';
 import service from './Data';
 import { isArray } from 'util';
 
-export default function TweetGrid () {
+export default function TweetGrid (props: any) {
 
     // auto generating randomized keys for the table elements
     //test  
@@ -26,7 +26,7 @@ export default function TweetGrid () {
     const [notAValidAccount, setNotAValidAccount] = useState('');
 
     const loadData = () => {
-        service.getAllTweets(twitterAccount)
+        service.getAllTweets(twitterAccount, props.jwt)
         .then((result: [] | null) => {
             if(isArray(result)) {
                 console.log(result);
@@ -38,7 +38,7 @@ export default function TweetGrid () {
                 return;
             }
         });
-        service.getRanking(twitterAccount)
+        service.getRanking(twitterAccount, props.jwt)
         .then((result: [string, any][] | null) => {
             if(isArray(result)) {
                 setRanking(result);

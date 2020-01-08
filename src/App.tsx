@@ -1,55 +1,30 @@
-import React from 'react';
+import React, {useState} from 'react';
 import './App.css';
-import Typography from '@material-ui/core/Typography';
 import TweetGrid from './component/TweetGrid';
 import Login from './component/Login';
 import SignUp from './component/SignUp';
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link
-} from "react-router-dom";
+import {BrowserRouter as Router, Switch, Route, Redirect} from "react-router-dom";
 
 const App: React.FC = () => {
+  const [token, setToken] = useState('');
+
+  const mainPage = () => {
+    if(token === '') {
+      return <Redirect to='/login' />
+    }
+    return (
+    <>
+      <TweetGrid jwt={token}></TweetGrid>
+    </>
+    );
+  }
   return (
     <Router>
-    <div>
-      <nav>
-        <ul>
-          <li>
-            <Link to="/">Home</Link>
-          </li>
-          <li>
-            <Link to="/login">Login</Link>
-          </li>
-          <li>
-            <Link to="/signUp">Sign Up</Link>
-          </li>
-        </ul>
-      </nav>
-
-      {/* A <Switch> looks through its children <Route>s and
-          renders the first one that matches the current URL. */}
       <Switch>
-        <Route path="/login">
-          <Login />
-        </Route>
-        <Route path="/signUp">
-          <SignUp />
-        </Route>
-        <Route path="/">
-          <div className="App">
-            <header>
-              <Typography variant="h2" className='Tweety'>Tweety</Typography>
-            </header>
-            <div className='tweetGrid'>
-              <TweetGrid/>
-            </div>
-          </div>
-        </Route>
+        <Route path="/login" render={() => <Login setToken={setToken}/>}/>
+        <Route path="/signUp" component={SignUp}></Route>
+        <Route path="/" exact >{mainPage}</Route>
       </Switch>
-    </div>
     </Router>
     
   );
