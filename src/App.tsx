@@ -14,7 +14,7 @@ const App: React.FC = () => {
     }
     return (
     <>
-      <TweetGrid />
+      <TweetGrid jwt={token}></TweetGrid>
     </>
     );
   }
@@ -23,7 +23,7 @@ const App: React.FC = () => {
       <Switch>
         <Route path="/login" render={() => <Login setToken={setToken}/>}/>
         <Route path="/signUp" component={SignUp}></Route>
-        <Route path="/" exact>{mainPage}</Route>
+        <Route path="/" exact >{mainPage}</Route>
       </Switch>
     </Router>
     
