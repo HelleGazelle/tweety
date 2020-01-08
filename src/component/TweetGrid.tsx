@@ -96,7 +96,7 @@ export default function TweetGrid () {
                     </Table>
                 </Paper>
             </div>
-            <Chart ranking = {ranking} />
+            <Chart ranking = {ranking} previewTweets = {previewTweets} />
         </React.Fragment>
       );
 }

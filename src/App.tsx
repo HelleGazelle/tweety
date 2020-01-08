@@ -2,7 +2,6 @@ import React from 'react';
 import './App.css';
 import Typography from '@material-ui/core/Typography';
 import TweetGrid from './component/TweetGrid';
-import Chart from './component/Chart';
 import Login from './component/Login';
 import SignUp from './component/SignUp';
 import {
