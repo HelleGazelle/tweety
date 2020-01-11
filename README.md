@@ -2,7 +2,8 @@ For starting the project in development mode:
 
 ## Software you will need
 
-1. Node
+1. NodeJs
+2. Npm package manager
 2. MongoDb and Mongo Shell to spin up a local db
 3. Docker
 
