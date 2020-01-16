@@ -26,8 +26,5 @@ return next();
 
 app.listen(3001, () => {
     console.log('Listening to port 3001');
-
-    connectDB()
-        .then(() => console.log('MongoDB Connected'))
-        .catch(err => console.log("MongoDB Error"))
+    connectDB();
 });

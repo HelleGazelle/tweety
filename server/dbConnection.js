@@ -1,9 +1,11 @@
 const mongoose = require("mongoose");
 
-const connection = "mongodb://localhost:27017/User";
+const connection = "mongodb://mongo:27017";
 
 const connectDb = () => {
-  return mongoose.connect(connection, { useNewUrlParser: true });
+   mongoose.connect(connection);
+   mongoose.connection.on('connected', () => console.log('Connected'));
+   mongoose.connection.on('error', () => console.log('Connection failed with - ',err));
 };
 
 module.exports = connectDb;
