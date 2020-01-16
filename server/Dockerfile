@@ -1,7 +1,8 @@
-FROM node:latest
+FROM node:8
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 COPY package*.json ./
 RUN npm install
+COPY ./server /usr/src/app
 EXPOSE 3001
 CMD ["npm", "start"]
