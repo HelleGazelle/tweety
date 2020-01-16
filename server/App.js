@@ -1,16 +1,9 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const mongoose = require('mongoose')
+const connectDB = require('./dbConnection');
 const userRouter = require('./routes/user');
 const tweetRouter = require('./routes/tweets');
-
-mongoose.connect('mongodb://127.0.0.1:27017/users', {
-    useNewUrlParser: true,
-    useCreateIndex: true,
-    useFindAndModify: true,
-    useUnifiedTopology: true
-});
 
 // define middleware
 const app = express();
@@ -31,4 +24,10 @@ app.use( function(req, res, next) {
 return next();
 });
 
-app.listen(3001, () => console.log('Listening to port 3001'));
+app.listen(3001, () => {
+    console.log('Listening to port 3001');
+
+    connectDB()
+        .then(() => console.log('MongoDB Connected'))
+        .catch(err => console.log("MongoDB Error"))
+});
