@@ -124,7 +124,28 @@ class Chart extends Component<ChartProps, ChartState> {
                     options={{
                     }}
                 />
+
+                {/* <h2>Donut Chart</h2>
+                <Doughnut
+                    data={data}
+                    width={25}
+                    height={10}
+                    options={{
+                        maintainAspectRatio: true,
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                    beginAtZero: true
+                                }
+                            }]
+                        }
+                    }}
+                /> */}
             </div>
+
+
+
+
         )
     }
 }

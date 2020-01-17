@@ -1,5 +1,7 @@
 const express = require('express')
-const User = require('../models/User')
+const mongoose = require('mongoose');
+const User = require("../models/User");
+
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs')
 
@@ -13,9 +15,9 @@ router.post('/users/register', async (req, res) => {
         let user = new User(req.body);
         user.password = bcrypt.hashSync(user.password, saltRounds);
         await user.save();
-        res.status(201).send({ email: user.email })
+        return res.status(201).send({ email: user.email })
     } catch (error) {
-        res.status(400).send(error)
+        return res.status(400).send(error)
     }
 })
 
@@ -37,9 +39,9 @@ router.post('/users/login', async(req, res) => {
         };
         const token = generateAuthToken(user);
         console.log('sucessfully logged in: ' + user.email);
-        res.send(token);
+        return res.send(token);
     } catch (error) {
-        res.status(401).send(error);
+        return res.status(401).send(error);
     }
 
 })
