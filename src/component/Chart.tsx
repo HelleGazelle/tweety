@@ -22,13 +22,11 @@ class Chart extends Component<ChartProps, ChartState> {
 
     render() {
 
-
-
-        const data = {
+        const barData = {
             labels: ['Word1', 'Word2', 'Word3', 'Word4', 'Word5', 'Word6', 'Word7', 'Word8', 'Word9', 'Word10'],
             datasets: [
                 {
-                    label: 'My First dataset',
+                    label: 'Dataset',
                     backgroundColor: 'rgba(255,99,132,0.2)',
                     borderColor: 'rgba(255,99,132,1)',
                     borderWidth: 1,
@@ -39,35 +37,13 @@ class Chart extends Component<ChartProps, ChartState> {
             ]
         };
 
-
-
         for (let i = 0; i < this.props.ranking.length; i++) {
-            data.datasets[0].data[i] = this.props.ranking[i][1];
+            barData.datasets[0].data[i] = this.props.ranking[i][1];
             if (this.props.ranking[i][0] != null) {
-                data.labels[i] = this.props.ranking[i][0]!.toString();
+                barData.labels[i] = this.props.ranking[i][0]!.toString();
             }
         }
 
-        // function compare(a: any, b: any) {
-        //     if (a[0] < b[0]) {
-        //       return -1;
-        //     }
-        //     if (a[0] > b[0]) {
-        //       return 1;
-        //     }
-        //     // a muss gleich b sein
-        //     return 0;
-        //   }
-
-
-
-        // let favorite: any = [];
-        // for (let i = 0; i < this.props.previewTweets.length; i++) {
-        //     console.log("reply: ", this.props.previewTweets[i].in_reply_to_screen_name);
-        //     favorite.push([this.props.previewTweets[i].retweet_count, this.props.previewTweets[i].text]);
-        // }
-        // favorite.sort(compare);
-        // console.log("retweets: ", favorite);
 
 
         let replies: any = [];
@@ -76,24 +52,56 @@ class Chart extends Component<ChartProps, ChartState> {
         }
 
         let countedNames = replies.reduce(function (allNames: any, name: any) {
-            if (name in allNames) {
+            if (name in allNames && name != null) {
                 allNames[name]++;
             }
-            else {
+            else if (name != null) {
                 allNames[name] = 1;
             }
             return allNames;
         }, {});
 
-        console.log("replies: ", countedNames);
+        let countedNamesArr: [string, number][] = Object.entries(countedNames);
 
+        function compare(a: any, b: any) {
+            if (a[1] < b[1]) {
+                return -1;
+            }
+            if (a[1] > b[1]) {
+                return 1;
+            }
+            // a muss gleich b sein
+            return 0;
+        }
+
+        countedNamesArr.sort(compare);
+
+        const donutData = {
+            labels: ['no Account'],
+            datasets: [
+                {
+                    label: 'Dataset',
+                    backgroundColor: 'rgba(255,99,132,0.2)',
+                    borderColor: 'rgba(255,99,132,1)',
+                    borderWidth: 1,
+                    hoverBackgroundColor: 'rgba(255,99,132,0.4)',
+                    hoverBorderColor: 'rgba(255,99,132,1)',
+                    data: [this.props.ranking[0][1]]
+                }
+            ]
+        };
+
+        for (let i = 0; i < countedNamesArr.length; i++) {
+            donutData.datasets[0].data[i] = countedNamesArr[i][1];
+            donutData.labels[i] = countedNamesArr[i][0];
+        }
 
 
         return (
             <div className="chart">
-                <h2>Bar Chart</h2>
+                <h2>Word Ranking</h2>
                 <Bar
-                    data={data}
+                    data={barData}
                     width={25}
                     height={10}
                     options={{
@@ -108,27 +116,15 @@ class Chart extends Component<ChartProps, ChartState> {
                     }}
                 />
 
-                {/* <h2>Donut Chart</h2>
+                <h2>Replies</h2>
                 <Doughnut
-                    data={data}
+                    data={donutData}
                     width={25}
                     height={10}
                     options={{
-                        maintainAspectRatio: true,
-                        scales: {
-                            yAxes: [{
-                                ticks: {
-                                    beginAtZero: true
-                                }
-                            }]
-                        }
                     }}
-                /> */}
+                />
             </div>
-
-
-
-
         )
     }
 }
