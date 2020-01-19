@@ -1,9 +1,48 @@
-.container {
-    margin: 10px;
-    display: flex;
-    justify-content: center;
+.titleH1 {
+    padding-top: 0,5rem;
+    padding-bottom: 0,5rem;  
+    padding-right: 20rem;
+    padding-left: 35rem;
+    color:black;  
+    font-weight: bold ;
+    font-family: consolas;
+    font-size: 3rem;
 }
 
-.searchBox {
-    width: 230px;
+.ontop {
+    background: linear-gradient(45deg, #b5dffa 30%, #47b3fa 90%);
 }
+
+.twittericon{
+    width:"24px";
+    height:"24px";
+    color: black;
+    transition: width 4s, height 6s;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+
+.twittericon:hover {
+    width: 60px;
+    height: 60px;
+    color: #00acee;
+    padding-right: 360px;
+  }
+
+.twittericon:hover span:after{
+    opacity: 1;
+    right: 0;
+}
+
+.content {
+    background-color: #bebebe;
+
+}
+
+.titleH2{
+    padding-left: 120px ;    
+}
+
+
+
+

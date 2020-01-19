@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Bar, Doughnut } from 'react-chartjs-2';
+import '../styles/styles.css';
 
 interface ChartProps {
     ranking: (number | null)[][];
@@ -27,11 +28,11 @@ class Chart extends Component<ChartProps, ChartState> {
             datasets: [
                 {
                     label: 'Dataset',
-                    backgroundColor: 'rgba(255,99,132,0.2)',
-                    borderColor: 'rgba(255,99,132,1)',
+                    backgroundColor: "#00acee",
+                    borderColor: "#008dcd",
                     borderWidth: 1,
-                    hoverBackgroundColor: 'rgba(255,99,132,0.4)',
-                    hoverBorderColor: 'rgba(255,99,132,1)',
+                    hoverBackgroundColor: "#008dcd",
+                    hoverBorderColor: "#205370",
                     data: [this.props.ranking[0][1], this.props.ranking[0][1], this.props.ranking[0][1], this.props.ranking[0][1], this.props.ranking[0][1], this.props.ranking[0][1], this.props.ranking[0][1], this.props.ranking[0][1], this.props.ranking[0][1], this.props.ranking[0][1]]
                 }
             ]
@@ -81,11 +82,11 @@ class Chart extends Component<ChartProps, ChartState> {
             datasets: [
                 {
                     label: 'Dataset',
-                    backgroundColor: 'rgba(255,99,132,0.2)',
-                    borderColor: 'rgba(255,99,132,1)',
+                    backgroundColor: "#00acee",
+                    borderColor: "#008dcd",
                     borderWidth: 1,
-                    hoverBackgroundColor: 'rgba(255,99,132,0.4)',
-                    hoverBorderColor: 'rgba(255,99,132,1)',
+                    hoverBackgroundColor: "#008dcd",
+                    hoverBorderColor: "#205370",
                     data: [this.props.ranking[0][1]]
                 }
             ]
