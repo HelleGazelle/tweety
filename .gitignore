@@ -3,7 +3,7 @@
 # application properties
 
 /server/node_modules
-/server/config.js
+/server/test.json
 /server/.env
 
 # dependencies

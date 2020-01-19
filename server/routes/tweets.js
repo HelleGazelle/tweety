@@ -1,11 +1,15 @@
 const express = require('express')
 const Twitter = require('twitter');
 const router = express.Router();
-const config = require('../config.js');
 var jwt = require('express-jwt');
 require('dotenv').config();
 
-const client = new Twitter(config);
+const client = new Twitter({
+    consumer_key: process.env.TWITTER_CONSUMER_KEY,
+    consumer_secret: process.env.TWITTER_CONSUMER_SECRET,
+    access_token_key: process.env.TWITTER_ACCESS_TOKEN_KEY,
+    access_token_secret: process.env.TWITTER_ACCESS_TOKEN_SECRET
+});
 const userTimelineUrl = 'statuses/user_timeline.json?screen_name=';
 
 const tweetsFromAccount = (accountName) => client.get(userTimelineUrl + accountName + '&count=200', {});

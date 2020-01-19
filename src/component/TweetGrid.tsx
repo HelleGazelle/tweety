@@ -29,7 +29,6 @@ export default function TweetGrid (props: any) {
         service.getAllTweets(twitterAccount, props.jwt)
         .then((result: [] | null) => {
             if(isArray(result)) {
-                console.log(result);
                 setNotAValidAccount('');
                 setPreviewTweets(result.slice(0, 50));
             }
