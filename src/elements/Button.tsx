@@ -3,8 +3,8 @@ import React from 'react';
 
 const Button = styled.button`
 background-color: #00acee;
-padding: 0.5 em;
-margin: 0.5 em;
+padding: 0.5em;
+margin: 0.5em;
 border-radius: 4px;
 border-color: #bebebe;
 border-style: hidden;
