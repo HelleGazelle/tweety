@@ -100,7 +100,7 @@ class Chart extends Component<ChartProps, ChartState> {
 
         return (
             <div className="chart">
-                <h2>Word Ranking</h2>
+                <h2 className="titleH2">Word Ranking</h2>
                 <Bar
                     data={barData}
                     width={25}
@@ -117,7 +117,7 @@ class Chart extends Component<ChartProps, ChartState> {
                     }}
                 />
 
-                <h2>Replies</h2>
+                <h2 className="titleH2">Replies</h2>
                 <Doughnut
                     data={donutData}
                     width={25}
