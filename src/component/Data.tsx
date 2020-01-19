@@ -14,14 +14,14 @@ const getAllTweets = (accountName: string, jwt: string) => {
 const cleanUpSentences = (tweets: []) => {
     var urlPattern = /(?:www|https?)[^\s]+/;
     var tagPattern = /(@)[^\s]+/gi;
-    var hastTagPattern = /(#)[^\s]+/gi;
+    var hashTagPattern = /(#)[^\s]+/gi;
     var specialCharacters = /[.?!,‘’'"–\-*&;:]/gi;
 
     tweets.map((tweet: any) => {
         var tweetText = tweet.text;
         tweetText = tweetText.replace(urlPattern, '');
         tweetText = tweetText.replace(tagPattern, '');
-        tweetText = tweetText.replace(hastTagPattern, '');
+        tweetText = tweetText.replace(hashTagPattern, '');
         tweetText = tweetText.replace(specialCharacters, '');
         tweet.text = tweetText;
         return tweet;
@@ -30,7 +30,7 @@ const cleanUpSentences = (tweets: []) => {
 }
 
 const cleanUpWords = (dirtyWords: string[]) => {
-    const filter = ['Ok', 'an', 'from', 'much', 'more', 'time', 'Yes', 'would', 'this', 'no', 'its', 'or', 'was', 'has', 'No', '...', 'Its', 'been', 'RT','UP','THIS','YEAR', 'The', 'so', 'with','your', 'but', 'true', 'high', 'ahead', 'used', '', '\n', 'I', 'you', 'to', 'and', 'is', 'the', 'a', 'of', 'on', 'it', 'in', 'for', 'all', 'will', 'not', 'they', 'be', 'b', 'bRT', 'at', 'than', 'by', 'that', 'amp', 'S', 'now', 'our', 'next', 'cars', 'about', 'up', 'no', 'yes', 'X', 'bTesla', 'Will', 'one', 'want', 'what', 'should', 'their', 'then'];
+    const filter = ['are', 'Are', 'This', 'this', 'we', 'We','My', 'my', 'ok',  'Ok', 'an', 'from', 'much', 'more', 'time', 'Yes', 'would', 'this', 'no', 'its', 'or', 'was', 'has', 'No', '...', 'Its', 'been', 'RT','UP','THIS','YEAR', 'The', 'so', 'with','your', 'but', 'true', 'high', 'ahead', 'used', '', '\n', 'I', 'you', 'to', 'and', 'is', 'the', 'a', 'of', 'on', 'it', 'in', 'for', 'all', 'will', 'not', 'they', 'be', 'b', 'bRT', 'at', 'than', 'by', 'that', 'amp', 'S', 'now', 'our', 'next', 'cars', 'about', 'up', 'no', 'yes', 'X', 'bTesla', 'Will', 'one', 'want', 'what', 'should', 'their', 'then'];
     
     for(let i = 0; i < dirtyWords.length; i++) {
         filter.forEach(filterItem => {
