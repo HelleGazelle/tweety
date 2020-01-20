@@ -11,6 +11,7 @@ const getAllTweets = (accountName: string, jwt: string) => {
     return service.loadTweetsFromAccount(accountName, jwt);
 }
 
+// remove: hashtags, urls, special characters
 const cleanUpSentences = (tweets: []) => {
     var urlPattern = /(?:www|https?)[^\s]+/;
     var tagPattern = /(@)[^\s]+/gi;
@@ -29,6 +30,7 @@ const cleanUpSentences = (tweets: []) => {
     return tweets;
 }
 
+// filter connecting words
 const cleanUpWords = (dirtyWords: string[]) => {
     const filter = ['are', 'Are', 'This', 'this', 'we', 'We','My', 'my', 'ok',  'Ok', 'an', 'from', 'much', 'more', 'time', 'Yes', 'would', 'this', 'no', 'its', 'or', 'was', 'has', 'No', '...', 'Its', 'been', 'RT','UP','THIS','YEAR', 'The', 'so', 'with','your', 'but', 'true', 'high', 'ahead', 'used', '', '\n', 'I', 'you', 'to', 'and', 'is', 'the', 'a', 'of', 'on', 'it', 'in', 'for', 'all', 'will', 'not', 'they', 'be', 'b', 'bRT', 'at', 'than', 'by', 'that', 'amp', 'S', 'now', 'our', 'next', 'cars', 'about', 'up', 'no', 'yes', 'X', 'bTesla', 'Will', 'one', 'want', 'what', 'should', 'their', 'then'];
     
@@ -42,6 +44,7 @@ const cleanUpWords = (dirtyWords: string[]) => {
     return dirtyWords;
 }
 
+// count the number of words in all the tweets and return the top ten
 const getRanking = (accountName: string, jwt: string) => {
     return service.loadTweetsFromAccount(accountName, jwt)
         .then((result) => {
@@ -73,6 +76,7 @@ const getRanking = (accountName: string, jwt: string) => {
     })
 }
 
+// map the words with numbers
 const getWordsWithCounter = (tweets: []) => {
     const cleanTweets = cleanUpSentences(tweets);
     const dirtyWords: string[] = [];
@@ -98,6 +102,7 @@ const getWordsWithCounter = (tweets: []) => {
     return ranking
 }
 
+// compare method
 const compare = (a: any, b: any) => {
     if(a[1] > b[1]) {
         return -1;

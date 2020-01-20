@@ -1,5 +1,7 @@
 const axios = require('axios');
 const URL = 'http://localhost:3001/users/register';
+
+// send the data from registration form to backend and save in the db
 const sendRegisterData = (email: string, password: string) => {
     
     return new Promise<[]>((resolve, reject) => {

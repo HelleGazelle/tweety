@@ -4,14 +4,18 @@ const router = express.Router();
 var jwt = require('express-jwt');
 require('dotenv').config();
 
+// create twitter api client with environment credentials
 const client = new Twitter({
     consumer_key: process.env.TWITTER_CONSUMER_KEY,
     consumer_secret: process.env.TWITTER_CONSUMER_SECRET,
     access_token_key: process.env.TWITTER_ACCESS_TOKEN_KEY,
     access_token_secret: process.env.TWITTER_ACCESS_TOKEN_SECRET
 });
+
+// twitter timeline api endpoint
 const userTimelineUrl = 'statuses/user_timeline.json?screen_name=';
 
+// build up the api request
 const tweetsFromAccount = (accountName) => client.get(userTimelineUrl + accountName + '&count=200', {});
 
 // return tweets as json for the given screen name

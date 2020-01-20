@@ -8,6 +8,7 @@ import {BrowserRouter as Router, Switch, Route, Redirect} from "react-router-dom
 const App: React.FC = () => {
   const [token, setToken] = useState('');
 
+  // if there is a token retreived: grant access to tweet grid. otherwise redirect to login
   const mainPage = () => {
     if(token === '') {
       return <Redirect to='/login' />

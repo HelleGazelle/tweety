@@ -1,6 +1,7 @@
 const axios = require('axios');
 const URL = 'http://localhost:3001/users/login';
 
+// send request to backend and compare the response status code
 const requestLogin = (email: string, password: string) => {
     return new Promise<[]>((resolve, reject) => {
         axios.post(URL, {

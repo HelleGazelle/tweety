@@ -1,6 +1,7 @@
 const axios = require('axios');
 const URL = 'http://localhost:3001/tweets/';
 
+// send account name and request token to retreive tweets from requested account
 const loadTweetsFromAccount = (twitterAcc: string, jwt: string) => {
     const url = `${URL}${twitterAcc}`;
 

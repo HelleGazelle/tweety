@@ -29,6 +29,7 @@ export default function TweetGrid (props: any) {
     const [twitterAccount, setTwitterAccount] = useState('');
     const [notAValidAccount, setNotAValidAccount] = useState('');
 
+    // load the last 200 tweets from a particular account and slice the preview to 50 only
     const loadData = () => {
         service.getAllTweets(twitterAccount, props.jwt)
         .then((result: [] | null) => {

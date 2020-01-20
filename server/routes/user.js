@@ -8,6 +8,7 @@ const saltRounds = 10;
 
 const router = express.Router()
 
+// api endpoint: register a new user
 router.post('/users/register', async (req, res) => {
     // Create a new user
     try {
@@ -20,6 +21,7 @@ router.post('/users/register', async (req, res) => {
     }
 })
 
+// api endpoint: login an existing user
 router.post('/users/login', async(req, res) => {
     //Login a registered user
     try {
@@ -45,6 +47,7 @@ router.post('/users/login', async(req, res) => {
 
 })
 
+// generate an auth token if the user was logged in sucessfully
 const generateAuthToken = (user) => {
     // Generate an auth token for the user
     return jwt.sign({_id: user._id}, process.env.JWT_KEY);

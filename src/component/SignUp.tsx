@@ -53,6 +53,7 @@ export default function SignUp() {
   })
 
   const handleSubmit = async (event: any) => {
+    // prevent default form reset
     event.preventDefault();
     Service.sendRegisterData(formData.email, formData.password);
     history.push('login');
